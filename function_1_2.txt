@@ -1,0 +1,88 @@
+function data1
+var new_msg=msg;
+if (msg.payload.PTC==true)
+{var ptc={payload: "PTC ok"};}
+else 
+{var ptc = {payload: "PTC not ok"};}
+
+
+switch (msg.payload.SPEED) {
+        case 0:
+                var speed = { payload: "0 speed" };
+                break;
+        case 1:
+                var speed = { payload: "V1 speed (RH=1 RF=0 RY=0)" };
+                break;
+        case 2:
+                var speed = { payload: "V2 speed (RH=0 RF=1 RY=0)" };
+                break;
+        case 3:
+                var speed = { payload: "V3 speed (RH=1 RF=1 RY=0)" };
+                break;
+        case 4:
+                var speed = { payload: "V4 speed (RH=0 RF=0 RY=1)" };
+                break;
+        case 5:
+                var speed = { payload: "V5 speed (RH=1 RF=0 RY=1)" };
+                break;
+        case 6:
+                var speed = { payload: "V6 speed (RH=0 RF=1 RY=1)" };
+                break;
+        case 7:
+                var speed = { payload: "V7 speed (RH=1 RF=1 RY=1)" };
+                break;
+        default:
+                var speed = { payload: "not correct speed" };
+                break;
+}        
+
+if (msg.payload.FRN == true) { var frn = { payload: "Fren on" }; }
+else { var frn = { payload: "Fren off" }; }
+
+if (msg.payload.RU1 == true) { var ru1 = { payload: "Go to up" }; }
+if (msg.payload.RU2 == true) { var ru2 = { payload: "Go to down" }; }
+if ((msg.payload.RU2 == true) && (msg.payload.RU1 == true )) { var err = { payload: "Eror direction" }; }
+else { var err = { payload: "Ok" }; }
+
+if (msg.payload.RGK == true) { var rgk = { payload: "Contactor on" }; }
+else { var rgk = { payload: "Contactor off" }; }
+
+return [err, ptc, frn, rgk, ru2, ru1, speed];
+
+function data2
+
+var new_msg=msg;
+
+if (msg.payload.BOT==false) {var pit={payload: "nearly Pit"};}
+if (msg.payload.TOP == false) { var top = { payload: "nearly Top" }; }
+
+if ((msg.payload.TOP == false) && (msg.payload.BOT == false)) { var err1 = { payload: "Eror top and bot together" }; }
+else { var err1 = { payload: " " }; } 
+
+if (msg.payload.A3 == true) { var opcl = { payload: "door is close" }; }
+else { var opcl = { payload: "door is open" }; }
+
+if (msg.payload.ML2 == true) { var ml2 = { payload: "ML2 is on" }; }
+else { var ml2 = { payload: "" }; }
+
+if (msg.payload.ML1 == true) { var ml1 = { payload: "ML1 is on" }; }
+else { var ml1 = { payload: "" }; }
+
+if ((msg.payload.ML2 == true) && (msg.payload.ML1 == true)) { var ml2 = { payload: "In floor" }; var ml1 = { payload: "In floor" }; }
+
+if (msg.payload.DOWN == true) { var dwn = { payload: "move down" }; }
+else { var dwn = { payload: "" }; }
+
+if (msg.payload.UP == true) { var up = { payload: "move up" }; }
+else { var up = { payload: "" }; }
+
+if (msg.payload.INSP == true) { var insp = { payload: "Normal" }; }
+else { var insp = { payload: "Inspection" }; }
+
+if(((new_msg.payload.UP == true) || (new_msg.payload.DOWN == true)) && (new_msg.payload.INSP == true) )
+    {var err2 = { payload: "Try Move insp in normal" }; }
+
+if (((new_msg.payload.UP == true) && (new_msg.payload.DOWN == true)) && (new_msg.payload.INSP == false))
+    { var err3 = { payload: "error Move in insp both side" }; }
+
+return [err1, err2, err3, pit, top, opcl, ml2, ml1, dwn, up, insp];

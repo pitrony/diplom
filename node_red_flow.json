@@ -1,0 +1,382 @@
+[
+    {
+        "id": "b18bec0b439b9d18",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5f0269884354e473",
+        "type": "mqtt in",
+        "z": "b18bec0b439b9d18",
+        "name": "",
+        "topic": "/orange/data1",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "3ef8ed1b788e6706",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 200,
+        "wires": [
+            [
+                "f9f1589a13535bd9",
+                "d8d8d4322e81c2c7",
+                "adbf2ebcde129379"
+            ]
+        ]
+    },
+    {
+        "id": "f9f1589a13535bd9",
+        "type": "debug",
+        "z": "b18bec0b439b9d18",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "adbf2ebcde129379",
+        "type": "bit-decode",
+        "z": "b18bec0b439b9d18",
+        "name": "data1",
+        "bits": "3e09b2ac37fd8b79",
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "2db0875c6ac8b5c9",
+                "6d0da4179346d562"
+            ]
+        ]
+    },
+    {
+        "id": "d8d8d4322e81c2c7",
+        "type": "influxdb out",
+        "z": "b18bec0b439b9d18",
+        "influxdb": "9aca28e143868018",
+        "name": "db1",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 730,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "342f61db9f064ab2",
+        "type": "mqtt in",
+        "z": "b18bec0b439b9d18",
+        "name": "",
+        "topic": "/orange/data2",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "3ef8ed1b788e6706",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 280,
+        "wires": [
+            [
+                "660e456677d5289d",
+                "f9f1589a13535bd9"
+            ]
+        ]
+    },
+    {
+        "id": "2db0875c6ac8b5c9",
+        "type": "debug",
+        "z": "b18bec0b439b9d18",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "6d0da4179346d562",
+        "type": "function",
+        "z": "b18bec0b439b9d18",
+        "name": "function for data1",
+        "func": "var new_msg=msg;\nif (msg.payload.PTC==true)\n{var ptc={payload: \"PTC ok\"};}\nelse \n{var ptc = {payload: \"PTC not ok\"};}\n\n\nswitch (msg.payload.SPEED) {\n        case 0:\n                var speed = { payload: \"0 speed\" };\n                break;\n        case 1:\n                var speed = { payload: \"V1 speed (RH=1 RF=0 RY=0)\" };\n                break;\n        case 2:\n                var speed = { payload: \"V2 speed (RH=0 RF=1 RY=0)\" };\n                break;\n        case 3:\n                var speed = { payload: \"V3 speed (RH=1 RF=1 RY=0)\" };\n                break;\n        case 4:\n                var speed = { payload: \"V4 speed (RH=0 RF=0 RY=1)\" };\n                break;\n        case 5:\n                var speed = { payload: \"V5 speed (RH=1 RF=0 RY=1)\" };\n                break;\n        case 6:\n                var speed = { payload: \"V6 speed (RH=0 RF=1 RY=1)\" };\n                break;\n        case 7:\n                var speed = { payload: \"V7 speed (RH=1 RF=1 RY=1)\" };\n                break;\n        default:\n                var speed = { payload: \"not correct speed\" };\n                break;\n}        \n\nif (msg.payload.FRN == true) { var frn = { payload: \"Fren on\" }; }\nelse { var frn = { payload: \"Fren off\" }; }\n\nif (msg.payload.RU1 == true) { var ru1 = { payload: \"Go to up\" }; }\nif (msg.payload.RU2 == true) { var ru2 = { payload: \"Go to down\" }; }\nif ((msg.payload.RU2 == true) && (msg.payload.RU1 == true )) { var err = { payload: \"Eror direction\" }; }\nelse { var err = { payload: \"Ok\" }; }\n\nif (msg.payload.RGK == true) { var rgk = { payload: \"Contactor on\" }; }\nelse { var rgk = { payload: \"Contactor off\" }; }\n\nreturn [err, ptc, frn, rgk, ru2, ru1, speed];",
+        "outputs": 7,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 440,
+        "wires": [
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ]
+        ]
+    },
+    {
+        "id": "660e456677d5289d",
+        "type": "bit-decode",
+        "z": "b18bec0b439b9d18",
+        "name": "data2",
+        "bits": "4f9082451664583c",
+        "x": 474,
+        "y": 539,
+        "wires": [
+            [
+                "2db0875c6ac8b5c9",
+                "d49ce28ba13d1a5d"
+            ]
+        ]
+    },
+    {
+        "id": "95fe5c98a92b1857",
+        "type": "debug",
+        "z": "b18bec0b439b9d18",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d49ce28ba13d1a5d",
+        "type": "function",
+        "z": "b18bec0b439b9d18",
+        "name": "function for data2",
+        "func": "var new_msg=msg;\n\nif (msg.payload.BOT==false) {var pit={payload: \"nearly Pit\"};}\nif (msg.payload.TOP == false) { var top = { payload: \"nearly Top\" }; }\n\nif ((msg.payload.TOP == false) && (msg.payload.BOT == false)) { var err1 = { payload: \"Eror top and bot together\" }; }\nelse { var err1 = { payload: \" \" }; } \n\nif (msg.payload.A3 == true) { var opcl = { payload: \"door is close\" }; }\nelse { var opcl = { payload: \"door is open\" }; }\n\nif (msg.payload.ML2 == true) { var ml2 = { payload: \"ML2 is on\" }; }\nelse { var ml2 = { payload: \"\" }; }\n\nif (msg.payload.ML1 == true) { var ml1 = { payload: \"ML1 is on\" }; }\nelse { var ml1 = { payload: \"\" }; }\n\nif ((msg.payload.ML2 == true) && (msg.payload.ML1 == true)) { var ml2 = { payload: \"In floor\" }; var ml1 = { payload: \"In floor\" }; }\n\nif (msg.payload.DOWN == true) { var dwn = { payload: \"move down\" }; }\nelse { var dwn = { payload: \"\" }; }\n\nif (msg.payload.UP == true) { var up = { payload: \"move up\" }; }\nelse { var up = { payload: \"\" }; }\n\nif (msg.payload.INSP == true) { var insp = { payload: \"Normal\" }; }\nelse { var insp = { payload: \"Inspection\" }; }\n\nif(((new_msg.payload.UP == true) || (new_msg.payload.DOWN == true)) && (new_msg.payload.INSP == true) )\n    {var err2 = { payload: \"Try Move insp in normal\" }; }\n\nif (((new_msg.payload.UP == true) && (new_msg.payload.DOWN == true)) && (new_msg.payload.INSP == false))\n    { var err3 = { payload: \"error Move in insp both side\" }; }\n\nreturn [err1, err2, err3, pit, top, opcl, ml2, ml1, dwn, up, insp];",
+        "outputs": 10,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 640,
+        "wires": [
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ],
+            [
+                "95fe5c98a92b1857"
+            ]
+        ]
+    },
+    {
+        "id": "3ef8ed1b788e6706",
+        "type": "mqtt-broker",
+        "name": "orange",
+        "broker": "mqtt.eclipseprojects.io",
+        "port": "1883",
+        "clientid": "Orangepi",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "1",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3e09b2ac37fd8b79",
+        "type": "bit-config",
+        "name": "move",
+        "bits": [
+            {
+                "property": "PTC",
+                "length": 1,
+                "shift": 0,
+                "type": "boolean"
+            },
+            {
+                "property": "FRN",
+                "length": 1,
+                "shift": 1,
+                "type": "boolean"
+            },
+            {
+                "property": "RGK",
+                "length": 1,
+                "shift": 2,
+                "type": "boolean"
+            },
+            {
+                "property": "RU2",
+                "length": 1,
+                "shift": 3,
+                "type": "boolean"
+            },
+            {
+                "property": "RU1",
+                "length": 1,
+                "shift": 4,
+                "type": "boolean"
+            },
+            {
+                "property": "SPEED",
+                "length": 3,
+                "shift": 5,
+                "type": "number"
+            }
+        ]
+    },
+    {
+        "id": "9aca28e143868018",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "db1",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "4f9082451664583c",
+        "type": "bit-config",
+        "name": "status",
+        "bits": [
+            {
+                "property": "BOT",
+                "length": 1,
+                "shift": 0,
+                "type": "boolean"
+            },
+            {
+                "property": "TOP",
+                "length": 1,
+                "shift": 1,
+                "type": "boolean"
+            },
+            {
+                "property": "A3",
+                "length": 1,
+                "shift": 2,
+                "type": "boolean"
+            },
+            {
+                "property": "ML2",
+                "length": 1,
+                "shift": 3,
+                "type": "boolean"
+            },
+            {
+                "property": "ML1",
+                "length": 1,
+                "shift": 4,
+                "type": "boolean"
+            },
+            {
+                "property": "DOWN",
+                "length": 1,
+                "shift": 5,
+                "type": "boolean"
+            },
+            {
+                "property": "UP",
+                "length": 1,
+                "shift": 6,
+                "type": "boolean"
+            },
+            {
+                "property": "INSP",
+                "length": 1,
+                "shift": 7,
+                "type": "boolean"
+            }
+        ]
+    }
+]
