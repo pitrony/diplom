@@ -65,17 +65,17 @@
         "id": "d8d8d4322e81c2c7",
         "type": "influxdb out",
         "z": "b18bec0b439b9d18",
-        "influxdb": "9aca28e143868018",
-        "name": "db1",
-        "measurement": "",
+        "influxdb": "2f610221450a7fa0",
+        "name": "orange",
+        "measurement": "data1",
         "precision": "",
         "retentionPolicy": "",
         "database": "database",
         "precisionV18FluxV20": "ms",
         "retentionPolicyV18Flux": "",
-        "org": "organisation",
-        "bucket": "bucket",
-        "x": 730,
+        "org": "orange",
+        "bucket": "orange",
+        "x": 740,
         "y": 100,
         "wires": []
     },
@@ -97,7 +97,8 @@
         "wires": [
             [
                 "660e456677d5289d",
-                "f9f1589a13535bd9"
+                "f9f1589a13535bd9",
+                "a389bf7ae1ab81de"
             ]
         ]
     },
@@ -130,29 +131,36 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
+        "x": 730,
         "y": 440,
         "wires": [
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ]
         ]
     },
@@ -200,40 +208,103 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 790,
+        "x": 730,
         "y": 640,
         "wires": [
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ],
             [
-                "95fe5c98a92b1857"
+                "95fe5c98a92b1857",
+                "e43d78937f83ee9d"
             ]
         ]
+    },
+    {
+        "id": "a389bf7ae1ab81de",
+        "type": "influxdb out",
+        "z": "b18bec0b439b9d18",
+        "influxdb": "2f610221450a7fa0",
+        "name": "orange2",
+        "measurement": "data2",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "orange",
+        "bucket": "orange",
+        "x": 692,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e43d78937f83ee9d",
+        "type": "file",
+        "z": "b18bec0b439b9d18",
+        "name": "orangedata",
+        "filename": "orangedata",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1050,
+        "y": 160,
+        "wires": [
+            [
+                "f84b158f5d6da7d6"
+            ]
+        ]
+    },
+    {
+        "id": "f84b158f5d6da7d6",
+        "type": "debug",
+        "z": "b18bec0b439b9d18",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 240,
+        "wires": []
     },
     {
         "id": "3ef8ed1b788e6706",
@@ -310,16 +381,16 @@
         ]
     },
     {
-        "id": "9aca28e143868018",
+        "id": "2f610221450a7fa0",
         "type": "influxdb",
         "hostname": "127.0.0.1",
         "port": "8086",
         "protocol": "http",
         "database": "database",
-        "name": "db1",
+        "name": "orange",
         "usetls": false,
         "tls": "",
-        "influxdbVersion": "1.x",
+        "influxdbVersion": "2.0",
         "url": "http://localhost:8086",
         "timeout": "10",
         "rejectUnauthorized": true
