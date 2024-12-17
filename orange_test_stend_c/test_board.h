@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <time.h>
-//#ifdefine windows
-//#include <windows.h>
-//#endifdefine
-#include <unistd.h>
 #include <string.h>
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
-#include "/home/alexey/Desktop/for_diplom/orang_test_elevator_board2/paho.mqtt.c-master/src/MQTTClient.h"
-//#include "D:\alexey\iot_lerning\Диплом\for pub\wiringOP-next\wiringOP-next\wiringPi\wiringPi.h"
-//#include "D:\alexey\iot_lerning\Диплом\for pub\wiringOP-next\wiringOP-next\wiringPi\wiringPiI2C.h"
+#include <MQTTClient.h>
 #include <stdint.h>
 #include <stdlib.h>
-//#include <unistd.h> for lin usleep()
+#if defined(_WIN32)
+    #define sleep Sleep
+    #include <windows.h>
+#else
+    #include <sys/time.h>
+    #include <unistd.h>
+#endif
 
 typedef struct move_t{
 	uint8_t speed;
