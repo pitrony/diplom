@@ -1,9 +1,16 @@
 #include <stdio.h>
 #include <time.h>
+//#ifdefine windows
+//#include <windows.h>
+//#endifdefine
+
 #include <string.h>
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
 #include <MQTTClient.h>
+//#include "/home/alexey/Desktop/for_diplom/orang_test_elevator_board2/paho.mqtt.c-master/src/MQTTClient.h"
+//#include "D:\alexey\iot_lerning\Диплом\for pub\wiringOP-next\wiringOP-next\wiringPi\wiringPi.h"
+//#include "D:\alexey\iot_lerning\Диплом\for pub\wiringOP-next\wiringOP-next\wiringPi\wiringPiI2C.h"
 #include <stdint.h>
 #include <stdlib.h>
 #if defined(_WIN32)
@@ -13,6 +20,10 @@
     #include <sys/time.h>
     #include <unistd.h>
 #endif
+
+
+
+//#include <unistd.h> for lin usleep()
 
 typedef struct move_t{
 	uint8_t speed;
