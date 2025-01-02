@@ -38,7 +38,7 @@ printf("sending is eror\n");
 printf("\n");
 decode(&word1, &word2, data1, data2);
 
-Sleep(200); 
+Sleep(2); 
 }
 
 return 1;	
