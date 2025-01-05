@@ -21,8 +21,8 @@ MQTTClient client;
     MQTTClient_create(&client, ADDRESS, CLIENTID, MQTTCLIENT_PERSISTENCE_NONE, NULL);
     conn_opts.keepAliveInterval = 20;
     conn_opts.cleansession = 1;
-    conn_opts.username = "orange";
-    conn_opts.password = "orange";
+    //conn_opts.username = "orange";
+    //conn_opts.password = "orange";
 
     if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS)
     {
@@ -36,15 +36,15 @@ MQTTClient client;
     //pubmsg.payloadlen =64;
     pubmsg.payloadlen = sizeof(_data);
     pubmsg.qos = QOS;
-    pubmsg.retained = 0;
+    pubmsg.retained = 1;
     MQTTClient_publishMessage(client, TOPIC, &pubmsg, &token);
     printf("Waiting for up to %d seconds for publication of %d\n"
             "on topic %s for client with ClientID: %s\n",
             (int)(TIMEOUT/1000), _data, TOPIC, CLIENTID);
     rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
     printf("Message with delivery token %d delivered\n", token);
-    MQTTClient_disconnect(client, 10000);
-    MQTTClient_destroy(&client);
+    //MQTTClient_disconnect(client, 10000);
+    //MQTTClient_destroy(&client);
     return rc;
 
 }

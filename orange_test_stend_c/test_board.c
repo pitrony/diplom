@@ -27,9 +27,9 @@ while (1)
 printf("\n%d", data1);
 printf("\n%d", data2);
 printf("\n");
-char topic1[]="/host/orangepi/data1";
+char topic1[]="/orange/data1";
 int send1=send_mqtt(topic1, data1);
-char topic2[]="/host/orangepi/data2";
+char topic2[]="/orange/data2";
 int send2=send_mqtt(topic2, data2);
 if (send1==1 && send2==1)
 printf("sending Ok\n");
@@ -38,7 +38,7 @@ printf("sending is eror\n");
 printf("\n");
 decode(&word1, &word2, data1, data2);
 
-Sleep(2); 
+sleep(10); 
 }
 
 return 1;	
